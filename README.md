@@ -23,7 +23,7 @@ Linear	128	BatchNorm → ReLU → Dropout(0.3)
 Linear	64	BatchNorm → ReLU → Dropout(0.3)
 Linear	32	BatchNorm → ReLU
 Linear	1	-
-•	層数：4（隠れ層 3 + 出力層 1）
+•	層数：5（中間層 4 + 出力層 1）
 •	パラメータ数：およそ 16k
 
 4. 学習設定
