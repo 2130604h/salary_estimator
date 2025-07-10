@@ -5,7 +5,7 @@ to estimate a salary, using nn with a baseball hitting dataset
 
 1. データセット
 •	名称：Hitters（Major League Baseball Data from the 1986 and 1987 seasons）
-•	Kaggle URL：https://www.kaggle.com/datasets/jackbradshaw/islr-hitters-dataset
+•	Kaggle URL：https://www.kaggle.com/datasets/mathchi/hitters-baseball-data
 
 2. タスク概要
 •	入力：1986 年シーズン成績 + 1986 年終了時点までの通算成績 + 守備記録 + リーグ/地区情報（計 19 特徴量）
