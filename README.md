@@ -1,15 +1,12 @@
 # salary_estimator
-to estimate a salary, using nn with a baseball hitting dataset
-
-年俸予測プロジェクト
-
 1. データセット
 •	名称：Hitters（Major League Baseball Data from the 1986 and 1987 seasons）
 •	Kaggle URL：https://www.kaggle.com/datasets/mathchi/hitters-baseball-data
 
 2. タスク概要
-•	入力：1986 年シーズン成績 + 1986 年終了時点までの通算成績 + 守備記録 + リーグ/地区情報（計 19 特徴量）
+•	入力：1986 年シーズン成績 + 1986 年終了時点までの通算成績 + 守備記録 + リーグ/地区情報などなど（計 19 特徴量）＊以下参照
 •	出力：1987 年開幕日における選手年俸（単位：千ドル）
+
 主な説明変数
 ──────────
 AtBat, Hits, HmRun, Runs, RBI, Walks,
@@ -17,44 +14,34 @@ Years, CAtBat, CHits, CHmRun, CRuns, CRBI, CWalks,
 PutOuts, Assists, Errors,
 League (A/N), Division (E/W), NewLeague (A/N)
 
-3. ニューラルネットワーク構成
-レイヤ	出力ユニット	追加処理
-Linear	128	BatchNorm → ReLU → Dropout(0.3)
-Linear	64	BatchNorm → ReLU → Dropout(0.3)
-Linear	32	BatchNorm → ReLU
-Linear	1	-
-•	層数：5（中間層 4 + 出力層 1）
-•	パラメータ数：およそ 16k
+3. ニューラルネットワークの構成
+4層（入力＋中間2層＋出力層）
+ニューロン数：30
+損失関数：平均二乗誤差（MSELoss）
+オプティマイザ：確率的勾配降下法（SGD）
+学習率 0.01，モーメンタム 0.9
+学習設定：エポック数 10,000，バッチサイズ 25
+前処理：全ての数値特徴量を平均0・分散1に標準化、目的変数 Salary を log1p 変換
 
-4. 学習設定
-項目	値
-Optimizer	AdamW (lr=3e‑3, weight_decay=3e‑4)
-Loss	Huber (β=1.0)
-Scheduler	CosineAnnealingLR (T_max=250)
-Batch size	32
-EarlyStop	patience=25（USD RMSE 監視）
-
-5. 結果 
-指標	値
-RMSE (log1p 空間)	0.709
-RMSE (USD)	約 362 千ドル
-SHAP による主要特徴（Top-15）
-順位	特徴	mean|SHAP|	傾向
-1	CRuns	0.15	+ 大きいほど年俸↑
-2	Walks	0.13	+
-3	CHits	0.13	+
-4	CAtBat	0.10	- 多いほど年俸↓ (打席数が多いが打率低めな選手)
-5	HmRun	0.09	+ 本塁打は高年俸に直結
-6	RBI	0.08	+
-7	PutOuts	0.08	+ 守備機会の多さも評価対象
-8	Errors	0.08	- エラーが多いと年俸↓
-9	Division_W	0.07	+ 西地区の方がやや高い傾向
-10	CHmRun	0.07	+ 通算本塁打実績
-11	Hits	0.06	+
-12	CWalks	0.06	+
-13	CRBI	0.06	+
-14	Years	0.06	+ 年数は経験値としてプラス
-15	Runs	0.06	+
+6. 結果 
+epoch    0  val MSE: 7.448183
+epoch 1000  val MSE: 0.652246
+epoch 2000  val MSE: 0.671578
+epoch 3000  val MSE: 0.670604
+epoch 4000  val MSE: 0.671305
+epoch 5000  val MSE: 0.671063
+epoch 6000  val MSE: 0.671025
+epoch 7000  val MSE: 0.670998
+epoch 8000  val MSE: 0.670960
+epoch 9000  val MSE: 0.670957
  
-6. 考察
-   学習精度の向上に大きく余地が残る。SHAP 解析では通算ラン得点・四球・通算安打が最大のプラス寄与を示し、球団が“累積実績”を年俸に強く反映していることが定量化された。今後はカテゴリ列の Embedding 化と交互作用特徴の追加、K-fold アンサンブルでさらに 5–10 ％の誤差削減が見込まれる。
+7. 考察
+・学習の収束
+約1,000エポックでほぼ最適化が完了している。以降のエポックを削る、またはEarlyStoppingなどを利用すべき。
+
+・誤差の大きさ
+RMSE(log)≈0.82 は元スケールで約×2.3倍／0.44倍の誤差幅らしい（GPT)。高精度を目指すにはさらに改善が必要。
+
+・改善点
+学習率が一定の設定なので、自動に変更してみる
+バッチサイズを25から変更してみる
