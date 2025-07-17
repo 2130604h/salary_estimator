@@ -104,7 +104,7 @@ if __name__ == "__main__":
     train_model(model, inputs, targets)
 
     # --- テスト評価 ---
-    # テストセット分割（デモ用に検証セットと同じ分割を再利用してもOK）
+    # テストセット分割
     dataset = TensorDataset(inputs, targets)
     n = len(dataset)
     n_train = int(n * 0.8)
