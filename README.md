@@ -22,6 +22,7 @@ League (A/N), Division (E/W), NewLeague (A/N)
 学習率 0.01，モーメンタム 0.9
 学習設定：エポック数 10,000，バッチサイズ 25
 前処理：全ての数値特徴量を平均0・分散1に標準化、目的変数 Salary を log1p 変換
+テスト指標：MSE, RMSE, R^2
 
 6. 結果 
 epoch    0  val MSE: 8.399343
