@@ -24,16 +24,17 @@ League (A/N), Division (E/W), NewLeague (A/N)
 前処理：全ての数値特徴量を平均0・分散1に標準化、目的変数 Salary を log1p 変換
 
 6. 結果 
-epoch    0  val MSE: 7.448183
-epoch 1000  val MSE: 0.652246
-epoch 2000  val MSE: 0.671578
-epoch 3000  val MSE: 0.670604
-epoch 4000  val MSE: 0.671305
-epoch 5000  val MSE: 0.671063
-epoch 6000  val MSE: 0.671025
-epoch 7000  val MSE: 0.670998
-epoch 8000  val MSE: 0.670960
-epoch 9000  val MSE: 0.670957
+epoch    0  val MSE: 8.399343
+epoch 1000  val MSE: 0.651423
+epoch 2000  val MSE: 0.666177
+epoch 3000  val MSE: 0.667245
+epoch 4000  val MSE: 0.667970
+epoch 5000  val MSE: 0.668186
+epoch 6000  val MSE: 0.668241
+epoch 7000  val MSE: 0.668249
+epoch 8000  val MSE: 0.668246
+epoch 9000  val MSE: 0.668247
+Test MSE: 0.396830  RMSE: 0.629944  R^2: 0.499
  
 7. 考察
 ・学習の収束
